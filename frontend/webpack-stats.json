@@ -1,0 +1,26 @@
+{
+  "status": "done",
+  "assets": {
+    "bundle.js": {
+      "name": "bundle.js",
+      "path": "/home/minigrim0/Documents/Hackadoo/frontend/dist/bundle.js",
+      "publicPath": "http://127.0.0.1:8080/bundle.js"
+    },
+    "favicon.ico": {
+      "name": "favicon.ico",
+      "path": "/home/minigrim0/Documents/Hackadoo/frontend/dist/favicon.ico",
+      "publicPath": "http://127.0.0.1:8080/favicon.ico"
+    },
+    "index.html": {
+      "name": "index.html",
+      "path": "/home/minigrim0/Documents/Hackadoo/frontend/dist/index.html",
+      "publicPath": "http://127.0.0.1:8080/index.html"
+    }
+  },
+  "chunks": {
+    "app": [
+      "bundle.js"
+    ]
+  },
+  "publicPath": "http://127.0.0.1:8080/"
+}

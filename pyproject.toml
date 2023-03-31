@@ -10,6 +10,8 @@ python = "^3.10"
 Django = "^4.1.7"
 djangorestframework = "^3.14.0"
 
+[tool.poetry.group.dev.dependencies]
+django-webpack-loader = "^1.8.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -37,6 +37,18 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-webpack-loader"
+version = "1.8.1"
+description = "Transparently use webpack with django"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-webpack-loader-1.8.1.tar.gz", hash = "sha256:073beda18e2929fa5cd83bafbcaaf975e5945e84a17bfa81927cb6c9f5a17b94"},
+    {file = "django_webpack_loader-1.8.1-py2.py3-none-any.whl", hash = "sha256:2d50a902256cf94bdd87eac3e7687989c9aa757a63af21db68773115216cedee"},
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -91,4 +103,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e9516b2547ad4850db9463bdf4069dd122d3e5be87bfe99bf63eb2fa6c587810"
+content-hash = "376b5e8c6b64af7db679a915f82a45dcf17705795aca2a1c4a08feb996818e01"

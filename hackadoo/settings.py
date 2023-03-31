@@ -37,7 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "frontend",
+    "hackadoo",
 ]
+
+if DEBUG is True:
+    INSTALLED_APPS.append("webpack_loader")
+    WEBPACK_LOADER = {
+        "DEFAULT": {
+            "STATS_FILE": BASE_DIR / "frontend/webpack-stats.json"
+        }
+    }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

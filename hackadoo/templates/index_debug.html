@@ -1,0 +1,15 @@
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ page_title }}</title>
+    </head>
+
+    <body>
+        <h6 style="position:absolute;bottom: 5px;left: 5px;color: #ccc">/!\ DEBUG BUILD /!\</h6>
+        <div id="app"></div>
+        {% render_bundle 'app' %}
+    </body>
+</html>

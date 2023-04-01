@@ -16,8 +16,8 @@ def get_otd_articles(day, month):
                 max_len = len(i['extract'])
                 max_page = index
         page_py = wiki_wiki.page(j['pages'][max_page]['title'])
-        article = Article.objects.create(title=page_py.title, abstract=page_py.summary[0:200], url=page_py.fullurl, day=day, month=month, year=j['year'])
+        article = Article.objects.create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=j['year'])
         for i in page_py.categories:
-            cat = Category.objects.get_or_create(name=i)
-            article.categories.add(cat)
+            cat, _ = Category.objects.get_or_create(name=i)
+            article.subjects.add(cat)
         article.save()

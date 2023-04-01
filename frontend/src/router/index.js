@@ -8,6 +8,9 @@ const routes = [
         path: "/",
         name: "HomePage",
         component: HomePage,
+        meta: {
+            title:"Home"
+        }
     },
     {
         path: "/foryou",
@@ -24,7 +27,7 @@ const routes = [
         meta: {
             title: "Random"
         }
-    },
+    }
 ];
 
 const router = createRouter({

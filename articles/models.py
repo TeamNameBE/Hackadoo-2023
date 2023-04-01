@@ -13,6 +13,8 @@ class Article(models.Model):
     day = models.IntegerField()
     month = models.IntegerField()
     year = models.IntegerField()
+    photo_url = models.URLField(blank=True, null=True)
+    gif_url = models.URLField(blank=True, null=True)
 
 
 class Like(models.Model):

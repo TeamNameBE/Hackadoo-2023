@@ -1,16 +1,32 @@
-import requests
-import wikipediaapi
-from datetime import datetime
-
-from articles.models import Article, Category
 import argparse
 import io
 import json
 import os
+from datetime import datetime
+from urllib import parse, request
 
-from google.cloud import language_v1
 import numpy
+import requests
 import six
+import wikipediaapi
+from google.cloud import language_v1
+
+from articles.models import Article, Category
+
+
+def get_gif(search):
+    url = "http://api.giphy.com/v1/gifs/search"
+
+    params = parse.urlencode({
+        "q": search,
+        "api_key": os.environ.get("GIPHY_API_KEY"),
+        "limit": "1"
+    })
+
+    with request.urlopen("".join((url, "?", params))) as response:
+        data = json.loads(response.read())
+
+    return data['data'][0]['images']['original']['url']
 
 def classify(text, verbose=False):
     """Classify the input text into categories."""
@@ -56,14 +72,25 @@ def get_otd_articles(day, month):
                 max_len = len(page['extract'])
                 max_page = index
         page_py = wiki_wiki.page(event['pages'][max_page]['title'])
-        article, _ = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, _ = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'],
+                                                   gif_url=get_gif(page_py.title))
         for category in classify(page_py.summary):
             cat, _ = Category.objects.get_or_create(name=category)
             article.subjects.add(cat)
         article.save()
     for event in response['births']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
-        article, _ = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, _ = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
         cat, _ = Category.objects.get_or_create(name="Birth")
         article.subjects.add(cat)
         for category in classify(page_py.summary):
@@ -72,7 +99,12 @@ def get_otd_articles(day, month):
         article.save()
     for event in response['deaths']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
-        article, _ = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, _ = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
         cat, _ = Category.objects.get_or_create(name="Death")
         article.subjects.add(cat)
         for category in classify(page_py.summary):

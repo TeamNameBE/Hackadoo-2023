@@ -1,5 +1,18 @@
 <template>
     <div class="p-3">
+
+
+    <div id="flipbook">
+        <div class="hard"> Turn.js </div>
+        <div class="hard"></div>
+        <div> Page 1 </div>
+        <div> Page 2 </div>
+        <div> Page 3 </div>
+        <div> Page 4 </div>
+        <div class="hard"></div>
+        <div class="hard"></div>
+    </div>
+
         <div class="row width-90">
             <div class="col-3 news-article">
                 <h2>The Time Traveler's Gazette</h2>
@@ -41,6 +54,9 @@
 </template>
 
 <script>
+import $ from 'jquery';
+import 'turn.js';
+
 export default {
     name: "HomePage",
     computed: {
@@ -68,7 +84,15 @@ export default {
         register() {
             console.log("register");
         }
+    },
+    mounted(){
+        $("#flipbook").turn({
+            width: 400,
+            height: 300,
+            autoCenter: true
+        });
     }
+    
 }
 </script>
 

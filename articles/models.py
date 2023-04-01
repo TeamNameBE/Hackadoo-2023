@@ -4,6 +4,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Article(models.Model):
     url = models.URLField(max_length=200)
@@ -15,6 +18,9 @@ class Article(models.Model):
     year = models.IntegerField()
     photo_url = models.URLField(blank=True, null=True)
     gif_url = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Like(models.Model):

@@ -5,13 +5,13 @@
             <h5 class="subtitle">Bringing you yesterday's news, today!</h5>
             <span class="nav-span text-center row text-black">
                 <p class="nav-item col">✹</p>
-                <router-link class="nav-item col link-black" to="/">Home Page</router-link>
+                <router-link v-bind:class="$route.meta.title == 'Home' ? 'underlined' :'' " class="nav-item col link-black" to="/">Home Page</router-link>
                 <p class="nav-item col">✹</p>
-                <router-link  class="nav-item col link-black" to="/random">Random Page</router-link>
+                <router-link  v-bind:class="$route.meta.title == 'Random' ? 'underlined' :'' " class="nav-item col link-black" to="/random">Random Page</router-link>
                 <p class="nav-item col">✹</p>
-                <router-link  class="nav-item col link-black" to="/foryou">For You</router-link>
+                <router-link  v-bind:class="$route.meta.title == 'For You' ? 'underlined' :'' " class="nav-item col link-black" to="/foryou">For You</router-link>
                 <p class="nav-item col">✹</p>
-                <router-link  class="nav-item col link-black" to="/profile">Profile</router-link>
+                <router-link  v-bind:class="$route.meta.title == 'Profile' ? 'underlined' :'' " class="nav-item col link-black" to="/profile">Profile</router-link>
                 <p class="nav-item col">✹</p>
             </span>
         </div>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import createAxiosResponseInterceptor from "@/src/utils";
+
 export default {
     name: "App",
     computed: {
@@ -43,6 +45,9 @@ export default {
             return new Date().toLocaleDateString("en-UK", { year: "numeric" });
         }
     },
+    mounted(){
+        createAxiosResponseInterceptor();
+    }
 }
 </script>
 
@@ -94,8 +99,12 @@ export default {
     color: #6c757d;
 }
 
+.underlined{
+    text-decoration: underline !important;
+}
 .link-black {
     color: black;
+    text-decoration: none;
 }
 
 .link-black:hover {

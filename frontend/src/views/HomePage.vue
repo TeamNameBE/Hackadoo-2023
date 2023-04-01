@@ -4,6 +4,7 @@
             <div class="col-12">
                 <h1 class="news-feed-title">News Feed</h1>
                 <p class="subtitle">What's happening in the world?</p>
+                <small>Nothing bruh</small>
             </div>
         </div>
         <div class="row">

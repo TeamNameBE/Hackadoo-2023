@@ -15,6 +15,7 @@
         </div>
         <div class="col vertical-ruler"></div>
         <div class="col text-center mt-4">
+            <p class="text-center date-weekday">{{ dateDay }},</p>
             <p class="text-center date-start">{{ dateStart }}</p>
             <p class="text-center data-year">{{ dateYear }}</p>
         </div>
@@ -27,6 +28,10 @@
 export default {
     name: "App",
     computed: {
+        dateDay(){
+            // Returns the day of the week
+            return new Date().toLocaleDateString("en-UK", { weekday: "long" });
+        },
         dateStart() {
             // Returns the day of the month plus the month name
             return new Date().toLocaleDateString("en-UK", { day: "numeric", month: "long" });
@@ -83,9 +88,15 @@ export default {
     text-decoration: none;
 }
 
+.date-weekday {
+    font-family: "DSWalbaumfraktur", cursive;
+    font-size: 2em;
+}
+
 .date-start {
     font-family: "DSWalbaumfraktur", cursive;
     font-size: 2.8em;
+    margin-top: -0.75em;
 }
 
 .data-year {

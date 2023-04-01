@@ -1,11 +1,28 @@
+import json
+import os
 import re
+from urllib import parse, request
+
 import requests
 import wikipediaapi
+from google.cloud import language_v1
 
 from articles.models import Article, Category
-import os
 
-from google.cloud import language_v1
+
+def get_gif(search):
+    url = "http://api.giphy.com/v1/gifs/search"
+
+    params = parse.urlencode({
+        "q": search,
+        "api_key": os.environ.get("GIPHY_API_KEY"),
+        "limit": "1"
+    })
+
+    with request.urlopen("".join((url, "?", params))) as response:
+        data = json.loads(response.read())
+
+    return data['data'][0]['images']['original']['url']
 
 
 def classify(text, verbose=False):
@@ -56,7 +73,13 @@ def get_otd_articles(day, month):
                 max_len = len(page['extract'])
                 max_page = index
         page_py = wiki_wiki.page(event['pages'][max_page]['title'])
-        article, created = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, created = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'],
+                                                   gif_url=get_gif(page_py.title))
         if created:
             for category in classify(page_py.summary):
                 cat, _ = Category.objects.get_or_create(name=category)
@@ -65,7 +88,12 @@ def get_otd_articles(day, month):
     print("processing births")
     for event in response['births']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
-        article, created = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, created = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
         if created:
             cat, _ = Category.objects.get_or_create(name="Birth")
             article.subjects.add(cat)
@@ -77,7 +105,12 @@ def get_otd_articles(day, month):
     print("processing deaths")
     for event in response['deaths']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
-        article, created = Article.objects.get_or_create(title=page_py.title, abstract=page_py.summary, url=page_py.fullurl, day=day, month=month, year=event['year'])
+        article, created = Article.objects.get_or_create(title=page_py.title,
+                                                   abstract=page_py.summary,
+                                                   url=page_py.fullurl,
+                                                   day=day, month=month,
+                                                   year=event['year'],
+                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
         if created:
             cat, _ = Category.objects.get_or_create(name="Death")
             article.subjects.add(cat)

@@ -1,11 +1,11 @@
 from datetime import datetime
+
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView
 
-from django.http import JsonResponse
-
+from articles.models import Article, Category, Like
 from articles.serializers import ArticleSerializer, LikeSerializer
-from articles.models import Article, Like, Category
 
 
 @api_view(['GET'])

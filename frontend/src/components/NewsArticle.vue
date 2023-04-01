@@ -1,7 +1,7 @@
 <template>
     <div class="news-article">
         <h2>{{ title }}</h2>
-        <p class="subhead">{{ content }}</p>
+        <p class="subhead justified">{{ content }}</p>
     </div>
 </template>
 

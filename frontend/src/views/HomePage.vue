@@ -78,7 +78,7 @@ Elit ut aliquam purus sit amet luctus. Magna sit amet purus gravida quis blandit
 </script>
 
 
-<style scoped>
+<style>
 .central-columm {
     border-left: 2px solid black;
     border-right: 2px solid black;

@@ -16,6 +16,7 @@
 
 <script>
 import NewsArticle from '@/components/NewsArticle.vue';
+import instance from '@/src/axios';
 
 export default {
     name: "NewsFeed",
@@ -41,7 +42,7 @@ export default {
         if (this.$route.meta.title == "For You")
             url = "/api/articles/forme/"
 
-        fetch(url)
+        instance.get(url)
         .then(response => response.json())
         .then(data => {
             this.articles = data;

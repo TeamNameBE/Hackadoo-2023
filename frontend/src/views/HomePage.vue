@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import instance from "@/src/axios";
+import { saveToken, saveRefreshToken } from "@/src/store";
 
 export default {
     name: "HomePage",
@@ -64,8 +66,21 @@ export default {
     },
     methods: {
         login() {
-            console.log(this.username);
-            console.log(this.password);
+            instance.post(
+                "/api/token/",
+                JSON.stringify({
+                    username: this.username,
+                    password: this.password
+                })
+            )
+            .then(response => response.json())
+            .then(data => {
+                saveToken(data.access);
+                saveRefreshToken(data.refresh);
+            })
+            .catch(error => {
+                console.error(error);
+            });
         },
         register() {
             console.log("register");

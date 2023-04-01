@@ -14,7 +14,8 @@ def get_fyp_articles(request):
     **For You page**
     Here's the awesome algorithm that will get you the best articles
     """
-
+    if not request.user.is_authenticated:
+        return JsonResponse({"Error": "User not logged in"}, safe=False)
     user = request.user
     articles_list = Article.objects.filter(
         subjects__in=user.interests.all(),
@@ -44,7 +45,7 @@ def get_random_articles(request):
     """
 
     user = request.user
-    articles_list = Article.objects.all().order_by("?")
+    articles_list = Article.objects.filter(day=datetime.now().day, month=datetime.now().month).order_by("?")
     if user.is_authenticated:
         # articles_list = articles_list.exclude(
         #     id__in=user.viewed_articles.all().values_list('id', flat=True)

@@ -40,8 +40,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+    font-family: DSWalbaumfraktur;
+    src: url("../../hackadoo/assets/fonts/DSWalbaumfraktur.ttf");
+}
+
 .news-feed-title {
-    font-family: "Bungee", cursive;
+    font-family: "DSWalbaumfraktur", cursive;
     font-size: 7.5em;
 }
 
@@ -79,12 +84,12 @@ export default {
 }
 
 .date-start {
-    font-family: "Bungee", cursive;
+    font-family: "DSWalbaumfraktur", cursive;
     font-size: 2.8em;
 }
 
 .data-year {
-    font-family: "Bungee", cursive;
+    font-family: "DSWalbaumfraktur", cursive;
     font-size: 5em;
     margin-top: -0.75em;
 }

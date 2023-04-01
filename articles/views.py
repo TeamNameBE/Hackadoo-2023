@@ -20,9 +20,10 @@ def get_fyp_articles(request):
         subjects__in=user.interests.all(),
         day=datetime.now().day,
         month=datetime.now().month
-    ).exclude(
-        user.viewed_articles.all()
     ).order_by("?")[:10]
+    # .exclude(
+    #     id__in=user.viewed_articles.all().values_list('id', flat=True)
+    # )
 
     data = []
     for article in articles_list:
@@ -45,9 +46,10 @@ def get_random_articles(request):
     user = request.user
     articles_list = Article.objects.all().order_by("?")
     if user.is_authenticated:
-        articles_list = articles_list.exclude(
-            id__in=user.viewed_articles.all().values_list('id', flat=True)
-        )
+        # articles_list = articles_list.exclude(
+        #     id__in=user.viewed_articles.all().values_list('id', flat=True)
+        # )
+        pass
     articles_list = articles_list.exclude(
         subjects__in=Category.objects.filter(name__in=["Death", "Birth"])
     )[:10]

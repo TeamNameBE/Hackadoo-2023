@@ -6,11 +6,7 @@ from articles.models import Article, Like
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('title', 'abstract', 'url')
-
-    title = serializers.CharField(max_length=100)
-    abstract = serializers.CharField(max_length=200)
-    url = serializers.URLField(max_length=200)
+        fields = ('id', 'title', 'abstract', 'url')
 
 
 class LikeSerializer(serializers.ModelSerializer):

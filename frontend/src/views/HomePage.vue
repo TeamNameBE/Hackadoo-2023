@@ -4,14 +4,14 @@
             <div class="col-3 news-article">
                 <h2>The Time Traveler's Gazette</h2>
                 <p class="justified">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum. Turpis egestas sed tempus urna et pharetra pharetra massa massa. Tincidunt tortor aliquam nulla facilisi cras fermentum. Elit duis tristique sollicitudin nibh sit. Consequat semper viverra nam libero. Cursus vitae congue mauris rhoncus aenean. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Duis ultricies lacus sed turpis tincidunt id. Vel pretium lectus quam id leo in vitae. Nibh sed pulvinar proin gravida hendrerit lectus. Faucibus ornare suspendisse sed nisi lacus sed viverra tellus in. Mauris pharetra et ultrices neque ornare aenean. Urna duis convallis convallis tellus.<br />
+                    Welcome to The Time Traveler's Gazette! Our digital journal takes you on a journey through time, providing daily news from the past on all kinds of topics, tailored to your interests. With our platform, you can discover the stories and events that shaped the world we live in today, and explore history in a new and engaging way. Every day, you'll receive a personalized selection of news stories from the particular day you're in, giving you a unique window into the past. From politics to science, culture to sports, The Time Traveler's Gazette has it all. So come join us on this journey through history, and see the world in a whole new light!<br />
                 </p>
             </div>
             <div class="central-columm news-article col-6">
                 <h2>How does it work ?</h2>
                 <img src="https://earlychurchhistory.org/wp-content/uploads/2020/04/Handshake-10.gif" alt="The Time Traveler's Gazette" class="col-12">
                 <p class="justified">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum. Turpis egestas sed tempus urna et pharetra pharetra massa massa. Tincidunt tortor aliquam nulla facilisi cras fermentum. Elit duis tristique sollicitudin nibh sit. Consequat semper viverra nam libero. Cursus vitae congue mauris rhoncus aenean. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Duis ultricies lacus sed turpis tincidunt id. Vel pretium lectus quam id leo in vitae. Nibh sed pulvinar proin gravida hendrerit lectus. Faucibus ornare suspendisse sed nisi lacus sed viverra tellus in. Mauris pharetra et ultrices neque ornare aenean. Urna duis convallis convallis tellus.<br/>
+                    The Time Traveler's Gazette is an easy-to-use digital journal that brings the past to life. Once you've accessed our website, you can create a profile and select your areas of interest, and we'll curate a daily selection of news stories from the particular day you're in. Our platform uses advanced algorithms to sift through historical archives and provide you with the most relevant and engaging content. Whether you're a history buff, a casual reader, or simply curious about the world around you, The Time Traveler's Gazette has something for everyone. With our intuitive interface and personalized approach, you'll find it easy to navigate through the past and discover the events and stories that fascinate you. So why wait? Visit our website today and take a journey through time!<br/>
                 </p>
             </div>
             <div class="col-3">
@@ -95,5 +95,12 @@ export default {
 
 .news-article p {
     font-family: "Baskervville", serif;
+}
+.justified::first-letter{
+    padding-top:0.2em;
+    padding-right:0.2em;
+    font-size: 300%;
+    float:left;
+    font-family: "DSWalbaumfraktur", cursive; 
 }
 </style>

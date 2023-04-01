@@ -3,18 +3,20 @@
         <div class="col col-9">
             <h1 class="text-center news-feed-title">Time Traveler's Gazette</h1>
             <h5 class="subtitle">Bringing you yesterday's news, today!</h5>
-            <span class="text-center row text-black ps-5 pe-5">
-                <router-link class="col link-black" to="/">Home Page</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/random">Random Page</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/foryou">For You</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/profile">Profile</router-link>
+            <span class="nav-span text-center row text-black">
+                <p class="nav-item col">✹</p>
+                <router-link class="nav-item col link-black" to="/">Home Page</router-link>
+                <p class="nav-item col">✹</p>
+                <router-link  class="nav-item col link-black" to="/random">Random Page</router-link>
+                <p class="nav-item col">✹</p>
+                <router-link  class="nav-item col link-black" to="/foryou">For You</router-link>
+                <p class="nav-item col">✹</p>
+                <router-link  class="nav-item col link-black" to="/profile">Profile</router-link>
+                <p class="nav-item col">✹</p>
             </span>
         </div>
         <div class="col vertical-ruler"></div>
-        <div class="col text-center mt-4">
+        <div class="col mt-4">
             <p class="text-center date-weekday">{{ dateDay }},</p>
             <p class="text-center date-start">{{ dateStart }}</p>
             <p class="text-center data-year">{{ dateYear }}</p>
@@ -44,10 +46,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @font-face {
     font-family: DSWalbaumfraktur;
     src: url("../../hackadoo/assets/fonts/DSWalbaumfraktur.ttf");
+}
+
+@font-face {
+    font-family: Baskervville;
+    src: url("../../hackadoo/assets/fonts/Baskervville-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: BaskervvilleItalic;
+    src: url("../../hackadoo/assets/fonts/Baskervville-Italic.ttf");
 }
 
 .news-feed-title {
@@ -60,6 +73,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     max-width: 1px;
+    padding-left: 0%;
+    padding-right: 0%;
 }
 
 .double-ruler{
@@ -103,5 +118,21 @@ export default {
     font-family: "DSWalbaumfraktur", cursive;
     font-size: 5em;
     margin-top: -0.75em;
+}
+
+.nav-item {
+    text-transform: uppercase;
+    max-width: fit-content;
+    font-weight: 900;
+    padding: 0;
+    font-size: 1.5em;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.nav-span {
+    padding-right: 15%;
+    padding-left: 15%;
+    justify-content: space-around;
 }
 </style>

@@ -1,18 +1,5 @@
 <template>
     <div class="p-3">
-
-
-    <div id="flipbook">
-        <div class="hard"> Turn.js </div>
-        <div class="hard"></div>
-        <div> Page 1 </div>
-        <div> Page 2 </div>
-        <div> Page 3 </div>
-        <div> Page 4 </div>
-        <div class="hard"></div>
-        <div class="hard"></div>
-    </div>
-
         <div class="row width-90">
             <div class="col-3 news-article">
                 <h2>The Time Traveler's Gazette</h2>
@@ -22,7 +9,8 @@
             </div>
             <div class="central-columm news-article col-6">
                 <h2>How does it work ?</h2>
-                <img src="https://earlychurchhistory.org/wp-content/uploads/2020/04/Handshake-10.gif" alt="The Time Traveler's Gazette" class="col-12">
+                <!-- <img src="https://earlychurchhistory.org/wp-content/uploads/2020/04/Handshake-10.gif" alt="The Time Traveler's Gazette" class="col-12"> -->
+                <img src="https://miro.medium.com/v2/resize:fit:1240/0*cv9k-Bkd3_f1hu0z.gif" alt="The Time Traveler's Gazette" class="col-12"> 
                 <p class="justified">
                     The Time Traveler's Gazette is an easy-to-use digital journal that brings the past to life. Once you've accessed our website, you can create a profile and select your areas of interest, and we'll curate a daily selection of news stories from the particular day you're in. Our platform uses advanced algorithms to sift through historical archives and provide you with the most relevant and engaging content. Whether you're a history buff, a casual reader, or simply curious about the world around you, The Time Traveler's Gazette has something for everyone. With our intuitive interface and personalized approach, you'll find it easy to navigate through the past and discover the events and stories that fascinate you. So why wait? Visit our website today and take a journey through time!<br/>
                 </p>
@@ -54,8 +42,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
-import 'turn.js';
 
 export default {
     name: "HomePage",
@@ -84,13 +70,6 @@ export default {
         register() {
             console.log("register");
         }
-    },
-    mounted(){
-        $("#flipbook").turn({
-            width: 400,
-            height: 300,
-            autoCenter: true
-        });
     }
     
 }

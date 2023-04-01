@@ -11,7 +11,23 @@
             <div class="col-3">
                 <div class="news-article">
                     <h2>Login</h2>
-                    <p class="subhead justified">By logging in you accept to give us all of your data for purely financial purposes</p>
+                    <div class="subhead justified">
+                        By logging in you accept to give us all of your data for purely financial purposes
+                        <form class="form mt-5">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username" placeholder="Your username..">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Your password..">
+                            <div class="row">
+                                <div class="col-3 p-2">
+                                    <button class="btn btn-primary mt-3 col-12" type="submit">Login</button>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <button class="col btn btn-success mt-3 col-12" type="submit">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

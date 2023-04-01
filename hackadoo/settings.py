@@ -37,9 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "frontend",
+    "hackadoo",
     'users',
     'articles'
 ]
+
+if DEBUG is True:
+    INSTALLED_APPS.append("webpack_loader")
+    WEBPACK_LOADER = {
+        "DEFAULT": {
+            "STATS_FILE": BASE_DIR / "frontend/webpack-stats.json"
+        }
+    }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,6 +130,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "hackadoo/assets",
+    BASE_DIR / "frontend/dist",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

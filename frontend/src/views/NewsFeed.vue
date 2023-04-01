@@ -1,16 +1,14 @@
 <template>
-    <!-- <h1>{{ $route.meta.title }}</h1> -->
     <div class="p-3">
         <div class="row width-90">
             <div class="col-3">
-                <NewsArticle v-for="article in firstColumnArticles" :key="article.id" :title="article.title" :content="article.abstract" />
+                <NewsArticle v-for=" article in firstColumnArticles" :key="article.id" :article="article" />
             </div>
             <div class="central-columm col-6">
-                <img src="https://earlychurchhistory.org/wp-content/uploads/2020/04/Handshake-10.gif" alt="The Time Traveler's Gazette" class="col-12">
-                <NewsArticle v-for="article in secondColumnArticles" :key="article.id" :title="article.title" :content="article.abstract" />
+                <NewsArticle v-for="(article, index) in secondColumnArticles" :key="article.id" :article="article" :media_position="index"/>
             </div>
             <div class="col-3">
-                <NewsArticle v-for="article in thirdColumnArticles" :key="article.id" :title="article.title" :content="article.abstract" />
+                <NewsArticle v-for="article in thirdColumnArticles" :key="article.id" :article="article" />
             </div>
         </div>
     </div>
@@ -20,7 +18,7 @@
 import NewsArticle from '@/components/NewsArticle.vue';
 
 export default {
-    name: "ForYou",
+    name: "NewsFeed",
     data() {
         return {
             articles: []
@@ -39,13 +37,14 @@ export default {
     },
     components: { NewsArticle },
     mounted() {
-        fetch("/api/articles/random/")
+        var url = "/api/articles/random/"
+        if (this.$route.meta.title == "For You")
+            url = "/api/articles/forme/"
+
+        fetch(url)
         .then(response => response.json())
         .then(data => {
             this.articles = data;
-            this.articles.forEach(article => {
-                article.title = article.title.replace(/_/g, " ");
-            });
         })
     }
 }

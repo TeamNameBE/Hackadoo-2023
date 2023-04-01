@@ -22,6 +22,8 @@ def get_gif(search):
     with request.urlopen("".join((url, "?", params))) as response:
         data = json.loads(response.read())
 
+    if len(data['data']) == 0:
+        return None
     return data['data'][0]['images']['original']['url']
 
 
@@ -51,7 +53,6 @@ def classify(text, verbose=False):
         result[category.name] = category.confidence
 
     if verbose:
-        print(text)
         for category in categories:
             print("=" * 20)
             print("{:<16}: {}".format("category", category.name))
@@ -73,12 +74,15 @@ def get_otd_articles(day, month):
                 max_len = len(page['extract'])
                 max_page = index
         page_py = wiki_wiki.page(event['pages'][max_page]['title'])
-        article, created = Article.objects.get_or_create(title=page_py.title,
+        photo_url = None
+        if max_page < len(event['pages']) and "originalimage" in event['pages'][max_page]:
+            photo_url = event['pages'][max_page]['originalimage']['source']
+        article, created = Article.objects.get_or_create(title=event['pages'][max_page]['titles']['normalized'],
                                                    abstract=page_py.summary,
                                                    url=page_py.fullurl,
                                                    day=day, month=month,
                                                    year=event['year'],
-                                                   photo_url=event['pages'][max_page]['originalimage']['source'],
+                                                   photo_url=photo_url,
                                                    gif_url=get_gif(page_py.title))
         if created:
             for category in classify(page_py.summary):
@@ -88,12 +92,15 @@ def get_otd_articles(day, month):
     print("processing births")
     for event in response['births']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
+        photo_url = None
+        if "originalimage" in event['pages'][0]:
+            photo_url = event['pages'][0]['originalimage']['source']
         article, created = Article.objects.get_or_create(title=page_py.title,
                                                    abstract=page_py.summary,
                                                    url=page_py.fullurl,
                                                    day=day, month=month,
                                                    year=event['year'],
-                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
+                                                   photo_url=photo_url)
         if created:
             cat, _ = Category.objects.get_or_create(name="Birth")
             article.subjects.add(cat)
@@ -105,12 +112,16 @@ def get_otd_articles(day, month):
     print("processing deaths")
     for event in response['deaths']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])
+        photo_url = None
+        if "originalimage" in event['pages'][0]:
+            photo_url = event['pages'][0]['originalimage']['source']
+
         article, created = Article.objects.get_or_create(title=page_py.title,
                                                    abstract=page_py.summary,
                                                    url=page_py.fullurl,
                                                    day=day, month=month,
                                                    year=event['year'],
-                                                   photo_url=event['pages'][max_page]['originalimage']['source'])
+                                                   photo_url=photo_url)
         if created:
             cat, _ = Category.objects.get_or_create(name="Death")
             article.subjects.add(cat)

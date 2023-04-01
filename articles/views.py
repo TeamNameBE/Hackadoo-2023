@@ -8,16 +8,6 @@ from articles.serializers import ArticleSerializer, LikeSerializer
 from articles.models import Article, Like
 
 
-def serialize_article(article):
-    # TODO : get the article data from the url
-    return {
-        'title': "article.title",
-        'date': "article.date",
-        'author': "article.author",
-        'content': "article.content",
-        'subject': "article.subject"
-    }
-
 @api_view(['GET'])
 def get_fyp_articles(request):
     user = request.user
@@ -25,7 +15,7 @@ def get_fyp_articles(request):
                                            month=datetime.now().month).exclude(user.viewed_articles.all()).order_by("?")[:10]
     data = []
     for article in articles_list:
-        data.append(serialize_article(article))
+        data.append(article)
         user.viewed_articles.add(article)
 
     serializer = ArticleSerializer(data, many=True)
@@ -36,11 +26,18 @@ def get_fyp_articles(request):
 @api_view(['GET'])
 def get_random_articles(request):
     user = request.user
-    articles_list = Article.objects.filter().exclude(user.viewed_articles.all()).order_by("?")[:10]
+    articles_list = Article.objects.all().order_by("?")
+    if user.is_authenticated:
+        # articles_list = articles_list.exclude(
+        #     id__in=user.viewed_articles.all().values_list('id', flat=True)
+        # )
+        pass
+    articles_list = articles_list[:10]
     data = []
     for article in articles_list:
-        data.append(serialize_article(article))
-        user.viewed_articles.add(article)
+        data.append(article)
+        if user.is_authenticated:
+            user.viewed_articles.add(article)
 
     serializer = ArticleSerializer(data, many=True)
 
@@ -56,7 +53,7 @@ def get_dated_articles(request):
         articles_list = Article.objects.filter(year=request.query_params.get('year')).order_by("?")[:10]
     data = []
     for article in articles_list:
-        data.append(serialize_article(article))
+        data.append(article)
         user.viewed_articles.add(article)
 
     serializer = ArticleSerializer(data, many=True)

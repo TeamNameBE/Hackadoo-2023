@@ -15,7 +15,7 @@ def get_fyp_articles(request):
     Here's the awesome algorithm that will get you the best articles
     """
     if not request.user.is_authenticated:
-        return JsonResponse({"Error": "User not logged in"}, safe=False)
+        return JsonResponse({"Error": "User not logged in"}, safe=False, status=401)
     user = request.user
     articles_list = Article.objects.filter(
         subjects__in=user.interests.all(),

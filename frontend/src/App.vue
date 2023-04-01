@@ -4,17 +4,19 @@
             <h1 class="text-center news-feed-title">Time Traveler's Gazette</h1>
             <h5 class="subtitle">Bringing you yesterday's news, today!</h5>
             <span class="nav-span text-center row text-black">
+                <p class="nav-item col">✹</p>
                 <router-link class="nav-item col link-black" to="/">Home Page</router-link>
-                <p class="nav-item col">♰</p>
+                <p class="nav-item col">✹</p>
                 <router-link  class="nav-item col link-black" to="/random">Random Page</router-link>
-                <p class="nav-item col">♰</p>
+                <p class="nav-item col">✹</p>
                 <router-link  class="nav-item col link-black" to="/foryou">For You</router-link>
-                <p class="nav-item col">♰</p>
+                <p class="nav-item col">✹</p>
                 <router-link  class="nav-item col link-black" to="/profile">Profile</router-link>
+                <p class="nav-item col">✹</p>
             </span>
         </div>
         <div class="col vertical-ruler"></div>
-        <div class="col text-center mt-4">
+        <div class="col mt-4">
             <p class="text-center date-weekday">{{ dateDay }},</p>
             <p class="text-center date-start">{{ dateStart }}</p>
             <p class="text-center data-year">{{ dateYear }}</p>
@@ -71,6 +73,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     max-width: 1px;
+    padding-left: 0%;
+    padding-right: 0%;
 }
 
 .double-ruler{
@@ -119,15 +123,16 @@ export default {
 .nav-item {
     text-transform: uppercase;
     max-width: fit-content;
-    font-weight: 700;
-    font-size: 1.2em;
-    margin-left: 5px;
-    margin-right: 5px;
+    font-weight: 900;
+    padding: 0;
+    font-size: 1.5em;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .nav-span {
-    padding-right: 20%;
-    padding-left: 20%;
+    padding-right: 15%;
+    padding-left: 15%;
     justify-content: space-around;
 }
 </style>

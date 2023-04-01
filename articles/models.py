@@ -7,7 +7,7 @@ class Category(models.Model):
 
 class Article(models.Model):
     url = models.URLField(max_length=200)
-    theme = models.CharField(max_length=200)
+    abstract = models.CharField(max_length=200)
     subjects = models.ManyToManyField(Category)
     day = models.IntegerField()
     month = models.IntegerField()

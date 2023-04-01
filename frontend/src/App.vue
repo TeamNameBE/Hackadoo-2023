@@ -3,14 +3,14 @@
         <div class="col col-9">
             <h1 class="text-center news-feed-title">Time Traveler's Gazette</h1>
             <h5 class="subtitle">Bringing you yesterday's news, today!</h5>
-            <span class="text-center row text-black ps-5 pe-5">
-                <router-link class="col link-black" to="/">Home Page</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/random">Random Page</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/foryou">For You</router-link>
-                <p class="col">♰</p>
-                <router-link  class="col link-black" to="/profile">Profile</router-link>
+            <span class="nav-span text-center row text-black">
+                <router-link class="nav-item col link-black" to="/">Home Page</router-link>
+                <p class="nav-item col">♰</p>
+                <router-link  class="nav-item col link-black" to="/random">Random Page</router-link>
+                <p class="nav-item col">♰</p>
+                <router-link  class="nav-item col link-black" to="/foryou">For You</router-link>
+                <p class="nav-item col">♰</p>
+                <router-link  class="nav-item col link-black" to="/profile">Profile</router-link>
             </span>
         </div>
         <div class="col vertical-ruler"></div>
@@ -44,10 +44,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @font-face {
     font-family: DSWalbaumfraktur;
     src: url("../../hackadoo/assets/fonts/DSWalbaumfraktur.ttf");
+}
+
+@font-face {
+    font-family: Baskervville;
+    src: url("../../hackadoo/assets/fonts/Baskervville-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: BaskervvilleItalic;
+    src: url("../../hackadoo/assets/fonts/Baskervville-Italic.ttf");
 }
 
 .news-feed-title {
@@ -103,5 +114,20 @@ export default {
     font-family: "DSWalbaumfraktur", cursive;
     font-size: 5em;
     margin-top: -0.75em;
+}
+
+.nav-item {
+    text-transform: uppercase;
+    max-width: fit-content;
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.nav-span {
+    padding-right: 20%;
+    padding-left: 20%;
+    justify-content: space-around;
 }
 </style>

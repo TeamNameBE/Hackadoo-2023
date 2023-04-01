@@ -5,14 +5,25 @@ from rest_framework.generics import CreateAPIView
 from django.http import JsonResponse
 
 from articles.serializers import ArticleSerializer, LikeSerializer
-from articles.models import Article, Like
+from articles.models import Article, Like, Category
 
 
 @api_view(['GET'])
 def get_fyp_articles(request):
+    """
+    **For You page**
+    Here's the awesome algorithm that will get you the best articles
+    """
+
     user = request.user
-    articles_list = Article.objects.filter(subjects__in=user.interests.all(), day=datetime.now().day,
-                                           month=datetime.now().month).exclude(user.viewed_articles.all()).order_by("?")[:10]
+    articles_list = Article.objects.filter(
+        subjects__in=user.interests.all(),
+        day=datetime.now().day,
+        month=datetime.now().month
+    ).exclude(
+        user.viewed_articles.all()
+    ).order_by("?")[:10]
+
     data = []
     for article in articles_list:
         data.append(article)
@@ -25,14 +36,22 @@ def get_fyp_articles(request):
 
 @api_view(['GET'])
 def get_random_articles(request):
+    """
+    **Random page**
+    Here's the awesome randomness that will get you the
+    best random articles
+    """
+
     user = request.user
     articles_list = Article.objects.all().order_by("?")
     if user.is_authenticated:
-        # articles_list = articles_list.exclude(
-        #     id__in=user.viewed_articles.all().values_list('id', flat=True)
-        # )
-        pass
-    articles_list = articles_list[:10]
+        articles_list = articles_list.exclude(
+            id__in=user.viewed_articles.all().values_list('id', flat=True)
+        )
+    articles_list = articles_list.exclude(
+        subjects__in=Category.objects.filter(name__in=["Death", "Birth"])
+    )[:10]
+
     data = []
     for article in articles_list:
         data.append(article)

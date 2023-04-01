@@ -1,3 +1,4 @@
+import axios from "axios";
 import instance from "@/src/axios";
 import { destroyToken, saveToken, getRefreshToken } from "./store";
 
@@ -6,7 +7,6 @@ import { destroyToken, saveToken, getRefreshToken } from "./store";
  * Wrap the interceptor in a function, so that i can be re-instantiated
  */
 function createAxiosResponseInterceptor() {
-    console.log("Mounting axios response interceptor");
     const interceptor = instance.interceptors.response.use(
         (response) => response,
         (error) => {
@@ -21,10 +21,9 @@ function createAxiosResponseInterceptor() {
                 })
                 .then((response) => {
                     saveToken();
-                    error.response.config.headers["Authorization"] =
-                        `Bearer ${response.data.access_token}`;
+                    error.response.config.headers["Authorization"] = `Bearer ${response.data.access}`;
 
-                    return instance(error.response.config);
+                    return axios(error.response.config);
                 })
                 .catch((error2) => {
                     destroyToken();

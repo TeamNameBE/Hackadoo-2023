@@ -13,7 +13,7 @@
             </div>
             <div class="col-3">
                 <h2 v-if="deaths.length" class="section-title">Necrology</h2>
-                <div class="col-12 row"></div>
+                <div class="col-12 row">
                     <NecrologyAndBirthArticle v-for="article in deaths" :key="article.id" :article="article" />
                 </div>
                 <hr />

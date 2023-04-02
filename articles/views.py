@@ -21,18 +21,29 @@ def get_fyp_articles(request):
         day=timezone.now().day,
         month=timezone.now().month
     ).order_by("?")[:10]
-    # .exclude(
-    #     id__in=user.viewed_articles.all().values_list('id', flat=True)
-    # )
 
-    data = []
+    deaths_articles = Article.objects.filter(
+        day=timezone.localtime(timezone.now()).day,
+        month=timezone.localtime(timezone.now()).month,
+        subjects__in=Category.objects.filter(name="Death"),
+    ).order_by("?")[:5]
+
+    births_articles = Article.objects.filter(
+        day=timezone.localtime(timezone.now()).day,
+        month=timezone.localtime(timezone.now()).month,
+        subjects__in=Category.objects.filter(name="Birth"),
+    ).order_by("?")[:5]
+
     for article in articles_list:
-        data.append(article)
         user.viewed_articles.add(article)
 
-    serializer = ArticleSerializer(data, many=True)
+    data = {
+        "articles": ArticleSerializer(articles_list, many=True).data,
+        "deaths": ArticleSerializer(deaths_articles, many=True).data,
+        "births": ArticleSerializer(births_articles, many=True).data,
+    }
 
-    return JsonResponse(serializer.data, safe=False)
+    return JsonResponse(data, safe=False)
 
 
 @api_view(['GET'])
@@ -54,13 +65,13 @@ def get_random_articles(request):
     deaths_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
-        subjects__in=Category.objects.filter(name="Deaths"),
+        subjects__in=Category.objects.filter(name="Death"),
     ).order_by("?")[:5]
 
     births_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
-        subjects__in=Category.objects.filter(name="Deaths"),
+        subjects__in=Category.objects.filter(name="Birth"),
     ).order_by("?")[:5]
 
     if user.is_authenticated:

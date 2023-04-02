@@ -20,7 +20,15 @@
                     <h2>Login</h2>
                     <div class="subhead justified">
                         By logging in you accept to give us all of your data for purely financial purposes 🤑
-                        <form class="form mt-5" action="javascript:void(0)">
+
+                        <div class="alert alert-danger" v-if="error">
+                            {{ error }}
+                        </div>
+                        <div class="alert alert-success" v-if="success">
+                            {{ success }}
+                        </div>
+
+                        <form class="form mt-5" action="javascript:void(0)" v-if="notLogged">
                             <label class="form-label" for="username">Username</label>
                             <input v-model="username" class="form-control" type="text" id="username" name="username" placeholder="Your username.." />
                             <label class="form-label" for="password">Password</label>
@@ -43,7 +51,8 @@
 
 <script>
 import instance from "@/src/axios";
-import { saveToken, saveRefreshToken } from "@/src/store";
+import { saveToken, saveRefreshToken, check_token } from "@/src/store";
+
 
 export default {
     name: "HomePage",
@@ -56,12 +65,17 @@ export default {
         },
         thirdColumnArticles() {
             return this.articles.filter((article, index) => index % 3 === 2);
+        },
+        notLogged() {
+            return !check_token();
         }
     },
     data(){
         return {
             username: "",
-            password: ""
+            password: "",
+            error: "",
+            success: ""
         }
     },
     methods: {
@@ -73,13 +87,20 @@ export default {
                     password: this.password
                 })
             )
-            .then(response => response.json())
-            .then(data => {
-                saveToken(data.access);
-                saveRefreshToken(data.refresh);
+            .then(response => {
+                saveToken(response.data.access);
+                saveRefreshToken(response.data.refresh);
+                this.success = "You are now logged in !";
+                setTimeout(() => {
+                    this.success = "";
+                }, 3000);
             })
             .catch(error => {
                 console.error(error);
+                this.error = "An error occured while trying to log you in.";
+                setTimeout(() => {
+                    this.error = "";
+                }, 3000);
             });
         },
         register() {

@@ -86,12 +86,12 @@ def get_otd_articles(day, month):
             if max_page < len(event['pages']) and "originalimage" in event['pages'][max_page]:
                 photo_url = event['pages'][max_page]['originalimage']['source']
             article, created = Article.objects.get_or_create(title=event['pages'][max_page]['titles']['normalized'],
-                                                            abstract=page_py.summary,
-                                                            url=page_py.fullurl,
-                                                            day=day, month=month,
-                                                            year=event['year'],
-                                                            photo_url=photo_url,
-                                                            gif_url=get_gif(page_py.title))
+                                                             abstract=page_py.summary,
+                                                             url=page_py.fullurl,
+                                                             day=day, month=month,
+                                                             year=event['year'],
+                                                             photo_url=photo_url,
+                                                             gif_url=get_gif(page_py.title))
             if created:
                 for category in classify(page_py.summary):
                     cat, _ = Category.objects.get_or_create(name=category)

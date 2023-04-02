@@ -15,7 +15,7 @@
                 </p>
             </div>
             <div class="col-3">
-                <div class="news-article">
+                <div v-if="notLogged" class="news-article">
                     <h2>Login</h2>
                     <div class="subhead justified">
                         By logging in you accept to give us all of your data for purely financial purposes 🤑
@@ -43,6 +43,22 @@
                         </form>
                     </div>
                 </div>
+                <div v-else-if="!user_loading" class="news-article">
+                    <h2>Your Interests</h2>
+
+                    <div v-for="interest in all_interests" :key="interest.id" :class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" :id="interest.id" :checked="interestPicked(interest)">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ interest.name }}
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-warning" @click="saveInterest()">Save</button>
+                    <hr />
+                    <button type="button" class="btn btn-danger" @click="logout()">Log out</button>
+                </div>
+                <div v-else class="news-article">
+                    <h2>Loading...</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -50,7 +66,8 @@
 
 <script>
 import instance from "@/src/axios";
-import { saveToken, saveRefreshToken, check_token } from "@/src/store";
+import { saveToken, saveRefreshToken, check_token, destroyRefreshToken, destroyToken } from "@/src/store";
+import $ from "jquery";
 
 
 export default {
@@ -65,16 +82,19 @@ export default {
         thirdColumnArticles() {
             return this.articles.filter((article, index) => index % 3 === 2);
         },
-        notLogged() {
-            return !check_token();
-        }
     },
     data(){
         return {
             username: "",
             password: "",
             error: "",
-            success: ""
+            success: "",
+            all_interests: [],
+            user: {
+                "interests": []
+            },
+            user_loading: true,
+            notLogged: true
         }
     },
     methods: {
@@ -90,6 +110,7 @@ export default {
                 saveToken(response.data.access);
                 saveRefreshToken(response.data.refresh);
                 this.success = "You are now logged in !";
+                this.notLogged = false
                 setTimeout(() => {
                     this.success = "";
                 }, 3000);
@@ -104,6 +125,52 @@ export default {
         },
         register() {
             console.log("register");
+        },
+        logout(){
+            destroyRefreshToken();
+            destroyToken();
+        },
+        interestPicked(interest){
+            return this.user.interests.filter(user_interest => {
+                if (user_interest.id === interest.id)
+                    return user_interest
+            }).length > 0
+        }, 
+        saveInterest(){
+            var check_interests = $('.form-check-input:checkbox:checked')
+            var checked_interests = []
+            for (const interest of check_interests) {
+                checked_interests.push(parseInt(interest.id))
+            }
+
+            var new_interests = this.all_interests.filter(interest => {
+                if(checked_interests.includes(interest.id))
+                    return interest
+            })
+            this.user.interests = new_interests
+            instance.put(
+                "/api/users/",
+                JSON.stringify(this.user)
+            ).then(response =>{console.log(response)})
+        }
+    },
+    mounted(){
+        if (check_token()){
+            instance.get(
+                "/api/categories/"
+            )
+            .then(response =>{
+                this.all_interests = response.data
+            })
+
+            this.notLogged = false
+            instance.get(
+                "/api/users/",
+            )
+            .then(response => {
+                this.user = response.data
+                this.user_loading = false
+            })
         }
     }
     
@@ -140,5 +207,10 @@ export default {
     font-size: 300%;
     float:left;
     font-family: "DSWalbaumfraktur", cursive; 
+}
+
+.section-title {
+    font-family: "DSWalbaumfraktur", serif;
+    text-transform: capitalize;
 }
 </style>

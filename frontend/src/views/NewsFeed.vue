@@ -5,12 +5,16 @@
                 <NewsArticle v-for=" article in firstColumnArticles" :key="article.id" :article="article" :center="false" />
             </div>
             <div class="central-columm col-6">
+                <div v-if="!firstColumnArticles.length">
+                    <h2>No articles available</h2>
+                    <img src="https://giphy.com/embed/6uGhT1O4sxpi8"/>
+                </div>
                 <NewsArticle v-for="(article, index) in secondColumnArticles" :key="article.id" :article="article" :media_position="index" :center="true" />
             </div>
             <div class="col-3">
-                <h2>Necrology</h2>
+                <h2 v-if="deaths.length">Necrology</h2>
                 <NecrologyArticle v-for="article in deaths" :key="article.id" :article="article" />
-                <h2>Births</h2>
+                <h2 v-if="births.length">Births</h2>
                 <BirthArticle v-for="article in births" :key="article.id" :article="article" />
             </div>
         </div>
@@ -28,7 +32,8 @@ export default {
     data() {
         return {
             articles: [],
-            deaths: []
+            deaths: [],
+            births: []
         };
     },
     computed: {

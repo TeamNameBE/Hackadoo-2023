@@ -4,4 +4,4 @@ from django.db import models
 
 class User(AbstractUser):
     interests = models.ManyToManyField("articles.Category")
-    viewed_articles = models.ManyToManyField("articles.Article")
+    viewed_articles = models.ManyToManyField("articles.Article", blank=True)

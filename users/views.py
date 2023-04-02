@@ -12,7 +12,7 @@ class UpdateUser(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
-        username = self.kwargs["username"]
+        username = self.request.user.username
         return get_object_or_404(User, username=username)
 
     def put(self, request, *args, **kwargs):

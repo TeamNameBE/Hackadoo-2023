@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.http import JsonResponse
+from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView
 
@@ -19,8 +18,8 @@ def get_fyp_articles(request):
     user = request.user
     articles_list = Article.objects.filter(
         subjects__in=user.interests.all(),
-        day=datetime.now().day,
-        month=datetime.now().month
+        day=timezone.now().day,
+        month=timezone.now().month
     ).order_by("?")[:10]
     # .exclude(
     #     id__in=user.viewed_articles.all().values_list('id', flat=True)
@@ -45,25 +44,36 @@ def get_random_articles(request):
     """
 
     user = request.user
-    articles_list = Article.objects.filter(day=datetime.now().day, month=datetime.now().month).order_by("?")
-    if user.is_authenticated:
-        # articles_list = articles_list.exclude(
-        #     id__in=user.viewed_articles.all().values_list('id', flat=True)
-        # )
-        pass
-    articles_list = articles_list.exclude(
+    articles_list = Article.objects.filter(
+        day=timezone.localtime(timezone.now()).day,
+        month=timezone.localtime(timezone.now()).month
+    ).exclude(
         subjects__in=Category.objects.filter(name__in=["Death", "Birth"])
-    )[:10]
+    ).order_by("?")[:10]
 
-    data = []
-    for article in articles_list:
-        data.append(article)
-        if user.is_authenticated:
+    deaths_articles = Article.objects.filter(
+        day=timezone.localtime(timezone.now()).day,
+        month=timezone.localtime(timezone.now()).month,
+        subjects__in=Category.objects.filter(name="Deaths"),
+    ).order_by("?")[:5]
+
+    births_articles = Article.objects.filter(
+        day=timezone.localtime(timezone.now()).day,
+        month=timezone.localtime(timezone.now()).month,
+        subjects__in=Category.objects.filter(name="Deaths"),
+    ).order_by("?")[:5]
+
+    if user.is_authenticated:
+        for article in articles_list:
             user.viewed_articles.add(article)
 
-    serializer = ArticleSerializer(data, many=True)
+    data = {
+        "articles": ArticleSerializer(articles_list, many=True).data,
+        "deaths": ArticleSerializer(deaths_articles, many=True).data,
+        "births": ArticleSerializer(births_articles, many=True).data,
+    }
 
-    return JsonResponse(serializer.data, safe=False)
+    return JsonResponse(data, safe=False)
 
 
 @api_view(['GET'])

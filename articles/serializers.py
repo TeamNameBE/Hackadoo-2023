@@ -10,18 +10,23 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Article
-        fields = ('id', 'title', 'abstract', 'url', 'media_url', 'subjects')
-
+    subject = serializers.SerializerMethodField()
     media_url = serializers.SerializerMethodField()
-    subjects = CategorySerializer(read_only=True, many=True)
+    # subjects = CategorySerializer(read_only=True, many=True)
+
+    def get_subject(self, obj):
+        return obj.subjects.all()[0].name if obj.subjects.count() > 0 else ""
 
     def get_media_url(self, obj):
         if "Sensitive Subjects" in obj.subjects.all().values_list('name', flat=True):
             return obj.photo_url or None
         else:
             return obj.gif_url or None
+        
+    class Meta:
+        model = Article
+        fields = ('id', 'title', 'abstract', 'url', 'media_url', 'subject')
+
 
 
 class LikeSerializer(serializers.ModelSerializer):

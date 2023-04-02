@@ -10,6 +10,9 @@ from google.cloud import language_v1
 from articles.models import Article, Category
 
 
+list_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
+               "December"]
+
 def get_gif(search):
     url = "http://api.giphy.com/v1/gifs/search"
 
@@ -57,7 +60,6 @@ def classify(text, verbose=False):
             for category in categories:
                 print("=" * 20)
                 print("{:<16}: {}".format("category", category.name))
-
                 print("{:<16}: {}".format("confidence", category.confidence))
 
         return [part for category in list(result.keys()) for part in category.split('/')[1:]]
@@ -70,28 +72,31 @@ def get_otd_articles(day, month):
     response = requests.get(f"https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/{month}/{day}").json()
     print("processing events")
     for event in response['events']:
-        max_len = 0
-        max_page = 0
+        max_page = -1
         for index, page in enumerate(event['pages']):
-            if len(page['extract']) > max_len:
-                max_len = len(page['extract'])
+            if f"{list_months[month-1]}_{day}" == page['title']:
+                continue
+            if f"{day} {list_months[month-1]}" in page['extract']:
                 max_page = index
-        page_py = wiki_wiki.page(event['pages'][max_page]['title'])
-        photo_url = None
-        if max_page < len(event['pages']) and "originalimage" in event['pages'][max_page]:
-            photo_url = event['pages'][max_page]['originalimage']['source']
-        article, created = Article.objects.get_or_create(title=event['pages'][max_page]['titles']['normalized'],
-                                                         abstract=page_py.summary,
-                                                         url=page_py.fullurl,
-                                                         day=day, month=month,
-                                                         year=event['year'],
-                                                         photo_url=photo_url,
-                                                         gif_url=get_gif(page_py.title))
-        if created:
-            for category in classify(page_py.summary):
-                cat, _ = Category.objects.get_or_create(name=category)
-                article.subjects.add(cat)
-            article.save()
+            elif f"{list_months[month-1]} {day}" in page['extract']:
+                max_page = index
+        if max_page != -1:
+            page_py = wiki_wiki.page(event['pages'][max_page]['title'])
+            photo_url = None
+            if max_page < len(event['pages']) and "originalimage" in event['pages'][max_page]:
+                photo_url = event['pages'][max_page]['originalimage']['source']
+            article, created = Article.objects.get_or_create(title=event['pages'][max_page]['titles']['normalized'],
+                                                            abstract=page_py.summary,
+                                                            url=page_py.fullurl,
+                                                            day=day, month=month,
+                                                            year=event['year'],
+                                                            photo_url=photo_url,
+                                                            gif_url=get_gif(page_py.title))
+            if created:
+                for category in classify(page_py.summary):
+                    cat, _ = Category.objects.get_or_create(name=category)
+                    article.subjects.add(cat)
+                article.save()
     print("processing births")
     for event in response['births']:
         page_py = wiki_wiki.page(event['pages'][0]['title'])

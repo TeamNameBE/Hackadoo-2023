@@ -15,7 +15,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     # subjects = CategorySerializer(read_only=True, many=True)
 
     def get_subject(self, obj):
-        return obj.subjects.all()[0].name if obj.subjects.count() > 0 else ""
+        return obj.subjects.all()[0].name if obj.subjects.count() > 0 else "Misc"
 
     def get_media_url(self, obj):
         if "Sensitive Subjects" in obj.subjects.all().values_list('name', flat=True):
@@ -25,7 +25,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Article
-        fields = ('id', 'title', 'abstract', 'url', 'media_url', 'subject')
+        fields = ('id', 'title', 'abstract', 'url', 'media_url', 'subject', 'year')
 
 
 

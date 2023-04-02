@@ -1,10 +1,11 @@
 from django.http import JsonResponse
 from django.utils import timezone
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.response import Response
 
 from articles.models import Article, Category, Like
-from articles.serializers import ArticleSerializer, LikeSerializer
+from articles.serializers import ArticleSerializer, LikeSerializer, CategorySerializer
 
 
 @api_view(['GET'])
@@ -26,13 +27,13 @@ def get_fyp_articles(request):
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
         subjects__in=Category.objects.filter(name="Death"),
-    ).order_by("?")[:5]
+    ).order_by("?")[:6]
 
     births_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
         subjects__in=Category.objects.filter(name="Birth"),
-    ).order_by("?")[:5]
+    ).order_by("?")[:6]
 
     for article in articles_list:
         user.viewed_articles.add(article)
@@ -66,13 +67,13 @@ def get_random_articles(request):
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
         subjects__in=Category.objects.filter(name="Death"),
-    ).order_by("?")[:5]
+    ).order_by("?")[:6]
 
     births_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,
         month=timezone.localtime(timezone.now()).month,
         subjects__in=Category.objects.filter(name="Birth"),
-    ).order_by("?")[:5]
+    ).order_by("?")[:6]
 
     if user.is_authenticated:
         for article in articles_list:
@@ -113,3 +114,14 @@ class LikeView(CreateAPIView):
         article = Article.objects.get(id=request.data.get('article_id'))
         Like.objects.create(user=user, article=article)
         return JsonResponse({'status': 'success'})
+
+
+class CategoryView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def list(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)

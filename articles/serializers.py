@@ -6,7 +6,7 @@ from articles.models import Article, Like, Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('name', )
+        fields = ('id', 'name', )
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -21,8 +21,8 @@ class ArticleSerializer(serializers.ModelSerializer):
         if "Sensitive Subjects" in obj.subjects.all().values_list('name', flat=True):
             return obj.photo_url or None
         else:
-            return obj.gif_url or None
-        
+            return obj.gif_url or obj.photo_url or None
+
     class Meta:
         model = Article
         fields = ('id', 'title', 'abstract', 'url', 'media_url', 'subject', 'year')

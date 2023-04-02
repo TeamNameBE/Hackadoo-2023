@@ -7,4 +7,5 @@ urlpatterns = [
     path('articles/random/', views.get_random_articles),
     path('articles/like/', views.LikeView.as_view()),
     path('articles/', views.get_dated_articles),
+    path('categories/', views.CategoryView.as_view())
 ]

@@ -11,7 +11,7 @@
                 <p class="nav-item col">✹</p>
                 <router-link  v-bind:class="$route.meta.title == 'For You' ? 'underlined' :'' " class="nav-item col link-black" to="/foryou">For You</router-link>
                 <p class="nav-item col">✹</p>
-                <router-link  v-bind:class="$route.meta.title == 'Profile' ? 'underlined' :'' " class="nav-item col link-black" to="/profile">Profile</router-link>
+                <router-link  v-bind:class="$route.meta.title == 'Profile' ? 'underlined' :'' " class="nav-item col link-black" to="/">Profile</router-link>
                 <p class="nav-item col">✹</p>
             </span>
         </div>

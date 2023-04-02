@@ -5,8 +5,8 @@
         <img :src="article.media_url" alt="" :class="position_class">
 
         <p class="subhead justified">{{ article.abstract }}</p>
-
     </div>
+    <hr />
 </template>
 
 <script>

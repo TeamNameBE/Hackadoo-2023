@@ -103,7 +103,7 @@ def get_otd_articles(day, month):
         photo_url = None
         if "originalimage" in event['pages'][0]:
             photo_url = event['pages'][0]['originalimage']['source']
-        article, created = Article.objects.get_or_create(title=page_py.title,
+        article, created = Article.objects.get_or_create(title=page_py.title.replace("_", " "),
                                                          abstract=page_py.summary,
                                                          url=page_py.fullurl,
                                                          day=day, month=month,
@@ -124,7 +124,7 @@ def get_otd_articles(day, month):
         if "originalimage" in event['pages'][0]:
             photo_url = event['pages'][0]['originalimage']['source']
 
-        article, created = Article.objects.get_or_create(title=page_py.title,
+        article, created = Article.objects.get_or_create(title=page_py.title.replace("_", " "),
                                                          abstract=page_py.summary,
                                                          url=page_py.fullurl,
                                                          day=day, month=month,

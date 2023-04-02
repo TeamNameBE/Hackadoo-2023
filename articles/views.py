@@ -20,7 +20,7 @@ def get_fyp_articles(request):
         subjects__in=user.interests.all(),
         day=timezone.now().day,
         month=timezone.now().month
-    ).order_by("?")[:10]
+    ).order_by("?")[:12]
 
     deaths_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,
@@ -60,7 +60,7 @@ def get_random_articles(request):
         month=timezone.localtime(timezone.now()).month
     ).exclude(
         subjects__in=Category.objects.filter(name__in=["Death", "Birth"])
-    ).order_by("?")[:10]
+    ).order_by("?")[:12]
 
     deaths_articles = Article.objects.filter(
         day=timezone.localtime(timezone.now()).day,

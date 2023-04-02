@@ -1,10 +1,10 @@
 <template>
-    <p>Lol t nez 👃</p>
+    <p>{{ article.title }} - {{ article.year }}</p>
 </template>
 
 <script>
 export default {
-    name: "BirthArticle",
+    name: "NecrologyAndBirthArticle",
     props: {
         article: Object,
     },

@@ -20,7 +20,7 @@ function createAxiosResponseInterceptor() {
                     refresh: getRefreshToken(),
                 })
                 .then((response) => {
-                    saveToken();
+                    saveToken(response.data.access);
                     error.response.config.headers["Authorization"] = `Bearer ${response.data.access}`;
 
                     return axios(error.response.config);

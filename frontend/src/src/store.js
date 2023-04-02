@@ -22,11 +22,19 @@ function destroyRefreshToken(){
     localStorage.removeItem('token');
 }
 
+function check_token(){
+    if (localStorage.getItem('token') === null) {
+        return false;
+    }
+    return true;
+}
+
 module.exports = {
     saveToken,
     getToken,
     saveRefreshToken,
     getRefreshToken,
     destroyToken,
-    destroyRefreshToken
+    destroyRefreshToken,
+    check_token
 }

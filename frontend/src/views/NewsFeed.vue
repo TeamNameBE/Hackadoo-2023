@@ -7,15 +7,20 @@
             <div class="central-columm col-6">
                 <div v-if="!firstColumnArticles.length">
                     <h2>No articles available</h2>
-                    <img src="https://giphy.com/embed/6uGhT1O4sxpi8"/>
+                    <img src="https://media3.giphy.com/media/6uGhT1O4sxpi8/giphy.gif?cid=ecf05e47301vdg9qy7pjxehyom4km7o0znszxqs2evxm9fy6&rid=giphy.gif&ct=g"/>
                 </div>
                 <NewsArticle v-for="(article, index) in secondColumnArticles" :key="article.id" :article="article" :media_position="index" :center="true" />
             </div>
             <div class="col-3">
-                <h2 v-if="deaths.length">Necrology</h2>
-                <NecrologyArticle v-for="article in deaths" :key="article.id" :article="article" />
-                <h2 v-if="births.length">Births</h2>
-                <BirthArticle v-for="article in births" :key="article.id" :article="article" />
+                <h2 v-if="deaths.length" class="section-title">Necrology</h2>
+                <div class="col-12 row"></div>
+                    <NecrologyAndBirthArticle v-for="article in deaths" :key="article.id" :article="article" />
+                </div>
+                <hr />
+                <h2 v-if="births.length" class="section-title">Births</h2>
+                <div class="col-12 row">
+                    <NecrologyAndBirthArticle v-for="article in births" :key="article.id" :article="article" />
+                </div>
             </div>
         </div>
     </div>
@@ -23,8 +28,7 @@
 
 <script>
 import NewsArticle from '@/components/NewsArticle.vue';
-import NecrologyArticle from '@/components/NecrologyArticle.vue';
-import BirthArticle from '@/components/BirthArticle.vue';
+import NecrologyAndBirthArticle from '@/components/NecrologyAndBirthArticle.vue';
 import instance from '@/src/axios';
 
 export default {
@@ -46,8 +50,7 @@ export default {
     },
     components: {
         NewsArticle ,
-        NecrologyArticle,
-        BirthArticle
+        NecrologyAndBirthArticle,
     },
     mounted() {
         var url = "/api/articles/random/"

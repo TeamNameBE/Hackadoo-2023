@@ -13,6 +13,7 @@ from articles.models import Article, Category
 list_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
                "December"]
 
+
 def get_gif(search):
     url = "http://api.giphy.com/v1/gifs/search"
 
@@ -63,7 +64,7 @@ def classify(text, verbose=False):
                 print("{:<16}: {}".format("confidence", category.confidence))
 
         return [part for category in list(result.keys()) for part in category.split('/')[1:]]
-    except Exception as e:
+    except Exception:
         return []
 
 

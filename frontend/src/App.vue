@@ -54,18 +54,18 @@ export default {
 <style>
 @font-face {
     font-family: DSWalbaumfraktur;
-    src: url("../../hackadoo/assets/fonts/DSWalbaumfraktur.ttf");
+    src: url("../src/assets/fonts/DSWalbaumfraktur.ttf");
 }
 
 @font-face {
     font-family: Baskervville;
-    src: url("../../hackadoo/assets/fonts/Baskervville-Regular.ttf");
+    src: url("../src/assets/fonts/Baskervville-Regular.ttf");
 }
 
 
 @font-face {
     font-family: BaskervvilleItalic;
-    src: url("../../hackadoo/assets/fonts/Baskervville-Italic.ttf");
+    src: url("../src/assets/fonts/Baskervville-Italic.ttf");
 }
 
 .news-feed-title {

@@ -35,10 +35,10 @@ services:
             - media_volume:/srv/media
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.studymi-secure.entrypoints=https"
-            - "traefik.http.routers.studymi-secure.rule=Host(`studymi.be`)"
-            - "traefik.http.routers.studymi-secure.tls=true"
-            - "traefik.http.routers.studymi-secure.service=nginx-studymi@docker"
+            - "traefik.http.routers.gazette-secure.entrypoints=https"
+            - "traefik.http.routers.gazette-secure.rule=Host(`gazette.teamna.me`)"
+            - "traefik.http.routers.gazette-secure.tls=true"
+            - "traefik.http.routers.gazette-secure.service=nginx-gazette@docker"
             - "traefik.docker.network=traefik-proxy"
         depends_on:
             - web

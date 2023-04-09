@@ -35,24 +35,22 @@ services:
             - media_volume:/srv/media
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.gazette-secure.entrypoints=https"
-            - "traefik.http.routers.gazette-secure.rule=Host(`gazette.teamna.me`)"
-            - "traefik.http.routers.gazette-secure.tls=true"
-            - "traefik.http.routers.gazette-secure.service=nginx-gazette@docker"
             - "traefik.docker.network=traefik-proxy"
+            - "traefik.http.routers.gazette-unsecure.rule=Host(`gazette.morti.teamna.me`)"
+            - "traefik.http.routers.gazette-unsecure.entrypoints=web"
+            - "traefik.http.routers.gazette.rule=Host(`gazette.morti.teamna.me`)"
+            - "traefik.http.routers.gazette.entrypoints=websecure"
+            - "traefik.http.routers.gazette.tls.certresolver=myresolver"
         depends_on:
             - web
         networks:
             - private
-            - public
             - traefik-proxy
         restart: unless-stopped
 
 networks:
     private:
         driver: overlay
-    public:
-        external: true
     traefik-proxy:
         external: true
 

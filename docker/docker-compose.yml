@@ -33,7 +33,7 @@ services:
         volumes:
             - static_volume:/srv/static
             - media_volume:/srv/media
-            - ./nginx/nginx.conf:/etc/nginx/conf.d:ro
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=traefik-proxy"

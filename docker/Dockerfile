@@ -21,5 +21,5 @@ COPY --from=npm_builder /vue/dist /srv/frontend/dist
 RUN pip install poetry
 RUN poetry install --only main
 
-ENTRYPOINT ["poetry", "run", "/srv/docker/entrypoint.sh"]
-CMD ["gunicorn", "hackadoo.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
+# ENTRYPOINT ["poetry", "run", "/srv/docker/entrypoint.sh"]
+CMD ["poetry", "run", "gunicorn", "hackadoo.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]

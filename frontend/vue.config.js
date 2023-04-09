@@ -4,7 +4,7 @@ const BundleTracker = require("webpack-bundle-tracker");
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
     ? '/static/'
-    : "http://10.30.66.49:8080",
+    : "http://127.0.0.1:8080",
   outputDir: "./dist/",
 
   configureWebpack: {

@@ -18,8 +18,20 @@ COPY . .
 RUN rm -rf frontend/*
 COPY --from=npm_builder /vue/dist /srv/frontend/dist
 
-RUN pip install poetry
-RUN poetry install --only main
+RUN curl -sSL https://install.python-poetry.org | python -
+ENV PATH="/root/.local/bin:$PATH"
 
-# ENTRYPOINT ["poetry", "run", "/srv/docker/entrypoint.sh"]
-CMD ["poetry", "run", "gunicorn", "hackadoo.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
+COPY pyproject.toml poetry.lock ./
+
+# Trick to copy libs instead of symlinking them
+RUN python -m venv --copies /srv/venv
+# Install required libs
+RUN . /srv/venv/bin/activate \
+    && poetry install --only main
+
+ENV PATH /srv/venv/bin:$PATH
+
+EXPOSE 8000
+
+RUN chmod u+x /srv/docker/start_django.sh
+CMD /srv/docker/start_django.sh

@@ -2,7 +2,7 @@
 name = "hackadoo"
 version = "0.1.0"
 description = "MIT"
-authors = ["Minigrim0, Morti, ZoroxaT, Nico"]
+authors = ["Minigrim0", "Morti", "ZoroxaT", "Nico"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
